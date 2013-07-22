@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+# purpose: convert calendar date to MJD.
+# synopsis: ./calender2MJD.pl <yyyymmdd>
+# use case: ./calender2MJD.pl 20100301					(output:55256)
+
+#$str_yyyymmdd="$ARGV[0]";
+
+while( $str_yyyymmdd=<STDIN> )
+{
+chomp($str_yyyymmdd);
+$str_yyyymmdd=~ s/^\s+|\s+$//g;
+$year=substr($str_yyyymmdd,0,4);
+$month=substr($str_yyyymmdd,4,2);
+$day=substr($str_yyyymmdd,6,2);
+
+$a = int((14-$month)/12);
+$y = $year + 4800 - $a;
+$m = $month + 12*$a -3;
+$JDN = $day + int((153*$m+2)/5) + 365*$y + int($y/4) - int($y/100) + int($y/400) - 32045;
+$MJDN = $JDN -2400001;
+print $MJDN,"\n";
+}
